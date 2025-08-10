@@ -32,12 +32,12 @@ def recommend_somgs():
   
   song_name=data['song']
   
-  song=df[df['track_name'].str.lower()==song_name.lower()]
+  song=df[df['name'].str.lower()==song_name.lower()]
   if song.empty:
     return jsonify({"error":"Song not found"}),404
   cluster_id=song['cluster'].values[0]
   similiar_songs=df[df['cluster']==cluster_id].sample(5)
-  result=similiar_songs[['track_name','artist']].to_dict(orient='records')
+  result=similiar_songs[['name','artist']].to_dict(orient='records')
   return jsonify(result)
 
 @app.route('/songs',methods=['GET'])
