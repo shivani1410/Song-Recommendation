@@ -6,4 +6,3 @@ kagglehub
 seaborn
 matplotlib
 scikit-learn
-pickle
