@@ -3,14 +3,19 @@ from flask_cors import CORS
 import pandas as pd
 import os
 import logging
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-pkl_path = os.path.join(BASE_DIR, "song_recommender.pkl")
+import gdown
+
+url = "https://drive.google.com/file/d/1g5HZYyjaYblwvlzLBWoQVzF_oNmJK7-9/view?usp=drive_link"
+output = "song_recommender.pkl"
+gdown.download(url, output, quiet=False)
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# pkl_path = os.path.join(BASE_DIR, "song_recommender.pkl")
 
 logging.basicConfig(
     level=logging.INFO,          # Minimum level to log
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
-df=pd.read_pickle(pkl_path)
+df=pd.read_pickle(output)
 app=Flask(__name__)
 CORS(app)
 

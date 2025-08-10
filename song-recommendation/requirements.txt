@@ -6,3 +6,4 @@ kagglehub
 seaborn
 matplotlib
 scikit-learn
+gdown
