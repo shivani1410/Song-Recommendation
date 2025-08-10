@@ -5,5 +5,5 @@ gunicorn
 kagglehub
 seaborn
 matplotlib
-sklearn
+scikit-learn
 pickle
