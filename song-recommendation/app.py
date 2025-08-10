@@ -5,17 +5,23 @@ import os
 import logging
 import gdown
 
-file_id = "1g5HZYyjaYblwvlzLBWoQVzF_oNmJK7-9"
-url = f"https://drive.google.com/uc?id={file_id}"
-output = "song_recommender.pkl"
-# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# pkl_path = os.path.join(BASE_DIR, "song_recommender.pkl")
+FILE_ID = "1g5HZYyjaYblwvlzLBWoQVzF_oNmJK7-9"
+OUTPUT_FILE = "song_recommender.pkl"
+
+# Download if not already present
+if not os.path.exists(OUTPUT_FILE):
+    print("Downloading dataset...")
+    url = f"https://drive.google.com/uc?id={FILE_ID}"
+    gdown.download(url, OUTPUT_FILE, quiet=False)
+
+# Now load the pickle
+df = pd.read_pickle(OUTPUT_FILE)
+print(f"Dataset loaded with {len(df)} rows")
 
 logging.basicConfig(
     level=logging.INFO,          # Minimum level to log
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
-df=pd.read_pickle(output)
 app=Flask(__name__)
 CORS(app)
 
