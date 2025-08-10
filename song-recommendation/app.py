@@ -5,6 +5,7 @@ import os
 import logging
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 pkl_path = os.path.join(BASE_DIR, "song_recommender.pkl")
+
 logging.basicConfig(
     level=logging.INFO,          # Minimum level to log
     format='%(asctime)s - %(levelname)s - %(message)s'
