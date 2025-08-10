@@ -5,9 +5,9 @@ import os
 import logging
 import gdown
 
-url = "https://drive.google.com/file/d/1g5HZYyjaYblwvlzLBWoQVzF_oNmJK7-9/view?usp=drive_link"
+file_id = "1g5HZYyjaYblwvlzLBWoQVzF_oNmJK7-9"
+url = f"https://drive.google.com/uc?id={file_id}"
 output = "song_recommender.pkl"
-gdown.download(url, output, quiet=False)
 # BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # pkl_path = os.path.join(BASE_DIR, "song_recommender.pkl")
 
