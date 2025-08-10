@@ -5,8 +5,8 @@ import os
 import logging
 import gdown
 
-FILE_ID = "11kE9l9nv1LgPLTtJLTBBGM77CkusgQ4I"
-OUTPUT_FILE = "song_recommender.pkl"
+FILE_ID = "11f9gF8CeFpgCdJzxMAYliZxgwxaiOWy-N"
+OUTPUT_FILE = "song_recommender.parquet"
 
 # Download if not already present
 if not os.path.exists(OUTPUT_FILE):
@@ -15,7 +15,7 @@ if not os.path.exists(OUTPUT_FILE):
     gdown.download(url, OUTPUT_FILE, quiet=False)
 
 # Now load the pickle
-df = pd.read_pickle(OUTPUT_FILE)
+df = pd.read_parquet(OUTPUT_FILE)
 print(f"Dataset loaded with {len(df)} rows")
 
 logging.basicConfig(
