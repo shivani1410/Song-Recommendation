@@ -22,7 +22,7 @@ def recommend_somgs():
   result=similiar_songs[['track_name','artist']].to_dict(orient='records')
   return jsonify(result)
 
-@app.route('/songs',methods=['POST'])
+@app.route('/songs',methods=['GET'])
 def get_songs():
     return jsonify('get songs')
 
