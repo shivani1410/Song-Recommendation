@@ -2,3 +2,8 @@ flask
 flask-cors
 pandas
 gunicorn
+kagglehub
+seaborn
+matplotlib
+sklearn
+pickle
