@@ -3,46 +3,35 @@ from flask_cors import CORS
 import pandas as pd
 import os
 import logging
-import gdown
-
-FILE_ID = "1f9gF8CeFpgCdJzxMAYliZxgwxaiOWy-N"
-OUTPUT_FILE = "song_recommender.parquet"
-
-# Download if not already present
-if not os.path.exists(OUTPUT_FILE):
-    print("Downloading dataset...")
-    url = f"https://drive.google.com/uc?id={FILE_ID}"
-    gdown.download(url, OUTPUT_FILE, quiet=False)
-
-# Now load the pickle
-df = pd.read_parquet(OUTPUT_FILE)
-print(f"Dataset loaded with {len(df)} rows")
+from supabase import create_client,Client
 
 logging.basicConfig(
-    level=logging.INFO,          # Minimum level to log
+    level=logging.INFO,         
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
+SUPABASE_URL=os.getenv('SUPABASE_URL')
+SUPABASE_ANON_KEY=os.getenv('SUPABASE_ANON_KEY')
+
+supabase:Client=create_client(SUPABASE_URL,SUPABASE_ANON_KEY)
 app=Flask(__name__)
 CORS(app)
 
 @app.route('/recommend-songs',methods=['POST'])
-def recommend_somgs():
-  logging.info("Application started") 
+def recommend_songs(song_name):
+  logging.info("Application started")
+ 
   data=request.get_json()
-  
   song_name=data['song']
-  
-  song=df[df['name'].str.lower()==song_name.lower()]
-  if song.empty:
-    return jsonify({"error":"Song not found"}),404
-  cluster_id=song['cluster'].values[0]
-  similiar_songs=df[df['cluster']==cluster_id].sample(5)
-  result=similiar_songs[['name','artist']].to_dict(orient='records')
-  return jsonify(result)
-
+  song_data=supabase.table('Song Recommender').select('*').ilike("name",song_name).execute()
+  if not song_data.data:
+      return jsonify({"error": "Song not found"}), 404
+  cluster_id=song_data.data[0]["cluster"]
+  recommend_song_list=(supabase.table('Song Recommender').select("name","artist").eq("cluster",cluster_id).limit(5).execute())
+  return jsonify(recommend_song_list.data)
 @app.route('/songs',methods=['GET'])
 def get_songs():
     return jsonify('get songs')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+    
