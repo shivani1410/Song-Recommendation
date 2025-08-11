@@ -20,7 +20,7 @@ app=Flask(__name__)
 CORS(app)
 
 @app.route('/recommend-songs',methods=['POST'])
-def recommend_songs(song_name):
+def recommend_songs():
   logging.info("Application started")
  
   data=request.get_json()
