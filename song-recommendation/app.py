@@ -29,7 +29,7 @@ def recommend_songs():
   if not song_data.data:
       return jsonify({"error": "Song not found"}), 404
   cluster_id=song_data.data[0]["cluster"]
-  recommend_song_list=(supabase.table('Song Recommender').select("name","artist").eq("cluster",cluster_id).limit(5).execute())
+  recommend_song_list=(supabase.table('Song Recommender').select("name","artists").eq("cluster",cluster_id).limit(5).execute())
   return jsonify(recommend_song_list.data)
 @app.route('/songs',methods=['GET'])
 def get_songs():
