@@ -1,0 +1,39 @@
+<section class="landing-page container">
+  <header class="hero">
+    <h1 class="title">Song Recommender 🎧</h1>
+    <p class="subtitle">Type a song name and get similar tracks.</p>
+  </header>
+
+  <div class="search-form">
+    <input
+      [(ngModel)]="songName"
+      type="search"
+      class="search-input"
+      placeholder="Enter a song name (e.g. 'Believer')"
+      required
+    />
+    <button type="button" class="btn-primary" (click)="getRecommendations(songName)">
+      Recommend
+    </button>
+  </div>
+
+  <!-- Loader -->
+  <div class="status" *ngIf="loading" aria-live="polite" aria-busy="true">
+    <div class="loader"></div>
+    <p>Loading recommendations...</p>
+  </div>
+
+  <!-- Results -->
+  <section class="results" *ngIf="!loading && list.length > 0">
+    <h2>Recommendations</h2>
+    <div class="song-list">
+      <div *ngFor="let s of list; let i = index" class="song-card" tabindex="0" [style.animationDelay]="(i * 100) + 'ms'">
+        <div class="song-index">{{ i + 1 }}</div>
+        <div class="song-meta">
+          <div class="song-title">{{ s.name || 'Unknown title' }}</div>
+          <div class="song-artist" *ngIf="s.artists">{{ s.artists }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
